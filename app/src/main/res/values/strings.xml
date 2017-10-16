@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RegexApps</string>
+    <string name="title_activity_main">@string/app_name</string>
+</resources>

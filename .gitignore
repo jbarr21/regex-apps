@@ -1,0 +1,14 @@
+.idea
+*.iml
+.gradle
+/local.properties
+.DS_Store
+/build
+/facebook/build
+*.apk
+*.keystore
+!debug.keystore
+/app/src/main/assets/crashlytics-build.properties
+/app/src/main/res/values/com_crashlytics_export_strings.xml
+Thumbs.db
+/app/version.properties
