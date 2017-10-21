@@ -3,18 +3,19 @@ package io.github.jbarr21.appsbyregex.ui.main
 import android.content.SharedPreferences
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.jakewharton.rxbinding2.support.design.widget.RxAppBarLayout
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import com.uber.autodispose.kotlin.autoDisposeWith
 import dagger.android.AndroidInjection
 import io.github.jbarr21.appsbyregex.BuildConfig
 import io.github.jbarr21.appsbyregex.R
 import io.github.jbarr21.appsbyregex.data.AppManager
-import io.github.jbarr21.appsbyregex.ui.util.AutoDisposeActivity
 import io.github.jbarr21.appsbyregex.ui.util.ifApiAtLeast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MainActivity : AutoDisposeActivity() {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         val KEY_REGEX = "KEY_REGEX"
@@ -63,7 +64,7 @@ class MainActivity : AutoDisposeActivity() {
             .doOnNext({ regex -> prefs.edit().putString(KEY_REGEX, regex.toString()).apply() })
             .switchMap { appManager.fetchApps(it.toString()) }
             .observeOn(AndroidSchedulers.mainThread())
-            .autoDisposeWith(this)
+            .autoDisposeWith(AndroidLifecycleScopeProvider.from(this))
             .subscribe({
                 adapter.setItems(it)
                 progress.visibility = View.GONE
