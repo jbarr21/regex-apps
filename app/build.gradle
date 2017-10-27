@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.0"
     defaultConfig {
         applicationId "io.github.jbarr21.appsbyregex"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -36,23 +36,33 @@ android {
             dimension "place"
         }
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        debug.java.srcDirs += 'src/debug/kotlin'
+        release.java.srcDirs += 'src/release/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+
+        // For kapt
+        main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+        debug.java.srcDirs += [file("$buildDir/generated/source/kapt/debug")]
+        release.java.srcDirs += [file("$buildDir/generated/source/kapt/release")]
+        test.java.srcDirs += [file("$buildDir/generated/source/kapt/test")]
+    }
 }
 
 dependencies {
-    implementation ('com.android.support:appcompat-v7:26.1.0') {
-        exclude group: "android.arch.lifecycle"
-    }
+    implementation 'com.android.support:appcompat-v7:27.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:design:27.0.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.0'
 
-    implementation "android.arch.lifecycle:runtime:1.0.0"
-    kapt "android.arch.lifecycle:compiler:1.0.0-beta1"
-//    implementation "android.arch.lifecycle:common-java8:1.0.0-beta1"
-    implementation "android.arch.lifecycle:extensions:1.0.0-beta1"
-//    implementation "android.arch.persistence.room:runtime:1.0.0-beta1"
-//    implementation "android.arch.persistence.room:rxjava2:1.0.0-beta1"
-//    kapt "android.arch.persistence.room:compiler:1.0.0-beta1"
+    implementation "android.arch.lifecycle:runtime:1.0.3"
+    kapt "android.arch.lifecycle:compiler:1.0.0-rc1"
+//    implementation "android.arch.lifecycle:common-java8:1.0.0-rc1"
+    implementation "android.arch.lifecycle:extensions:1.0.0-rc1"
+//    implementation "android.arch.persistence.room:runtime:1.0.0-rc1"
+//    implementation "android.arch.persistence.room:rxjava2:1.0.0-rc1"
+//    kapt "android.arch.persistence.room:compiler:1.0.0-rc1"
 //    implementation "android.arch.paging:runtime:1.0.0-alpha3"
 
     implementation 'com.firebase:firebase-jobdispatcher:0.8.2'
@@ -65,8 +75,8 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0'
     implementation 'com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0'
     implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0-RC3'
-    implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.3.0'
-    implementation 'com.uber.autodispose:autodispose-kotlin:0.3.0'
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.4.0'
+    implementation 'com.uber.autodispose:autodispose-kotlin:0.4.0'
 
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
